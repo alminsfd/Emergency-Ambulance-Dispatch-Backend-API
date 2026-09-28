@@ -1,0 +1,1 @@
+console.log("project start and my developer journey");
