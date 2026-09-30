@@ -1,0 +1,20 @@
+model Payment {
+     id        String           @id @default(uuid())
+     requestId String           @unique
+     request   EmergencyRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+     userId String
+     user   User   @relation(fields: [userId], references: [id])
+
+     amount          Float
+     status          PaymentStatus  @default(PENDING)
+     gateway         PaymentGateway
+     transactionId   String         @unique
+     gatewayResponse Json? // Stores raw response from Gateway (bKash/SSL/Stripe)
+
+     createdAt DateTime @default(now())
+     updatedAt DateTime @updatedAt
+
+     @@index([transactionId])
+     @@index([status])
+}

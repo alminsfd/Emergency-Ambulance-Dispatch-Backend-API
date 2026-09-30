@@ -1,0 +1,17 @@
+model Ambulance {
+     id            String          @id @default(uuid())
+     vehicleNumber String          @unique
+     type          String
+     status        AmbulanceStatus @default(AVAILABLE)
+     currentLat    Float?
+     currentLng    Float?
+     isDeleted     Boolean         @default(false)
+
+     driverProfile DriverProfile?
+     requests      EmergencyRequest[]
+
+     createdAt DateTime @default(now())
+     updatedAt DateTime @updatedAt
+
+     @@index([status])
+}

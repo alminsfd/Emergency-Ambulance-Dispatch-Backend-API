@@ -1,0 +1,43 @@
+enum UserRole {
+     ADMIN
+     PATIENT
+     DRIVER
+     DISPATCHER
+}
+
+enum PriorityLevel {
+     LOW
+     MEDIUM
+     HIGH
+     CRITICAL
+}
+
+enum AmbulanceStatus {
+     AVAILABLE
+     ON_DISPATCH
+     IN_MAINTENANCE
+     OFFLINE
+}
+
+enum RequestStatus {
+     PENDING
+     ACCEPTED
+     EN_ROUTE
+     PATIENT_PICKED_UP
+     HOSPITAL_ARRIVED
+     COMPLETED
+     CANCELLED
+}
+
+enum PaymentStatus {
+     PENDING
+     PAID
+     FAILED
+     REFUNDED
+}
+
+enum PaymentGateway {
+     BKASH
+     STRIPE
+     SSLCOMMERZ
+}

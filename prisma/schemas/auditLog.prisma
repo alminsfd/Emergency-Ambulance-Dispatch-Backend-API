@@ -1,0 +1,10 @@
+model AuditLog {
+     id        String  @id @default(uuid())
+     userId    String?
+     user      User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+     action    String // e.g., "DISPATCH_ASSIGNED", "STATUS_UPDATED", "USER_ROLE_CHANGED"
+     details   String? // JSON string or description
+     ipAddress String?
+
+     createdAt DateTime @default(now())
+}

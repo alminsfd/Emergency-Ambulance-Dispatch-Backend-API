@@ -1,0 +1,20 @@
+model DriverProfile {
+     id            String  @id @default(uuid())
+     userId        String  @unique
+     user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+     licenseNumber String  @unique
+     isAvailable   Boolean @default(true)
+     currentLat    Float?
+     currentLng    Float?
+
+     // Ambulance assigned to this driver
+     ambulanceId String?    @unique
+     ambulance   Ambulance? @relation(fields: [ambulanceId], references: [id])
+
+     emergencyRequests EmergencyRequest[]
+
+     createdAt DateTime @default(now())
+     updatedAt DateTime @updatedAt
+
+     @@index([isAvailable])
+}
