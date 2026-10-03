@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/alminsfd/Emergency-Ambulance-Dispatch-Backend-API#readme",
   "devDependencies": {
+    "@biomejs/biome": "2.5.15",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

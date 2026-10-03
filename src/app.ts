@@ -1,5 +1,5 @@
-import express, { Application, Request, Response } from 'express';
-import cors from 'cors';
+import express, { type Application, type Request, type Response } from "express";
+import cors from "cors";
 
 const app: Application = express();
 
@@ -9,11 +9,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Root Route
-app.get('/', (req: Request, res: Response) => {
-     res.status(200).json({
-          success: true,
-          message: 'Welcome to Emergency Ambulance Dispatch API ',
-     });
+app.get("/", (req: Request, res: Response) => {
+	res.status(200).json({
+		success: true,
+		message: "Welcome to Emergency Ambulance Dispatch API ",
+	});
 });
 
 export default app;
