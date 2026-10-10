@@ -1,14 +1,21 @@
 model User {
-     id         String   @id @default(uuid())
-     name       String
-     email      String   @unique
-     password   String
-     phone      String?
-     role       UserRole @default(PATIENT)
-     isVerified Boolean  @default(false)
-     isDeleted  Boolean  @default(false)
-     createdAt  DateTime @default(now())
-     updatedAt  DateTime @updatedAt
+     id                 String       @id @default(uuid())
+     name               String
+     email              String       @unique
+     phone              String?
+     password           String?
+     googleId           String?      @unique
+     authProvider       AuthProvider @default(CREDENTIAL)
+     role               UserRole     @default(PATIENT)
+     status             UserStatus   @default(ACTIVE)
+     needPasswordChange Boolean      @default(false)
+     imageUrl           String       @default("")
+     imagePublicId      String       @default("")
+     isVerified         Boolean      @default(false)
+     isDeleted          Boolean      @default(false)
+     deletedAt          DateTime?
+     createdAt          DateTime     @default(now())
+     updatedAt          DateTime     @updatedAt
 
      // Profile Relations
      driverProfile DriverProfile?

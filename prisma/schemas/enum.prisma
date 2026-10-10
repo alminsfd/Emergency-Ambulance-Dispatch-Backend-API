@@ -41,3 +41,14 @@ enum PaymentGateway {
      STRIPE
      SSLCOMMERZ
 }
+
+enum AuthProvider {
+     GOOGLE
+     CREDENTIAL
+}
+
+enum UserStatus {
+     ACTIVE
+     BLOCKED
+     DELETED
+}
