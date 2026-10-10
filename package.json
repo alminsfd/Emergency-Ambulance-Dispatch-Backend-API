@@ -9,7 +9,8 @@
     "google-auth-library": "^11.1.0",
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.23.0"
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
   },
   "name": "emergency-ambulance-dispatch-backend",
   "version": "1.0.0",
