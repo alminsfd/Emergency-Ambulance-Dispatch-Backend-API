@@ -8,4 +8,5 @@ export default {
 	port: process.env.PORT,
 	clientId: process.env.GoogleClientId,
 	nodeEnv: process.env.NODE_ENV,
+	frontend_url:process.env.FontendUrl
 };
