@@ -38,16 +38,16 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
 			password: hashedPassword,
 			role: UserRole.PATIENT,
 			status: UserStatus.ACTIVE,
-			emailVerified: false,
+			isVerified: false,
 			patient: {
 				create: { name, email },
 			},
 		},
 		omit: { password: true },
-		include: { patient: true },
+		
 	});
 
-	const { patient, ...user } = createdUser;
+	const {  ...user } = createdUser;
 	const jwtPayload = {
 		userId: user.id,
 		name: user.name,
@@ -69,7 +69,6 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
 
 	return {
 		user,
-		patient,
 		accessToken,
 		refreshToken,
 	};
@@ -140,9 +139,6 @@ const getMe = async (user: IRequestUser) => {
 		where: {
 			id: user.userId,
 		},
-		include: {
-			patient: true,
-		},
 		omit: {
 			password: true,
 		},
@@ -204,7 +200,7 @@ const refreshToken = async (token: string) => {
 	};
 };
 
-const googleLogin = async (payload: IGoogleLoginPayload) => {
+const googleLogin = async (payload: IGoogleLoginPayload) => {                                
 	let googleIdTokenPayload: TokenPayload | null | undefined = null;
 	try {
 		const ticket = await googleClient.verifyIdToken({
@@ -229,7 +225,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 		throw new Error("Google Email User Name Not Found");
 	}
 
-	const ifPatientExistWithGoogleAuth = await prisma.user.findUnique({
+	const ifPatientExistWithGoogleAuth = await prisma.user.findFirst({
 		where: {
 			email: googleIdTokenPayload.email,
 			role: UserRole.PATIENT,
@@ -239,8 +235,8 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 
 	let user = ifPatientExistWithGoogleAuth;
 
-	if (!ifPatientExistWithGoogleAuth) {
-		const ifPatientExistWithCredentials = await prisma.user.findUnique({
+	if (!user) {
+		const ifPatientExistWithCredentials = await prisma.user.findFirst({
 			where: {
 				email: googleIdTokenPayload.email,
 				role: UserRole.PATIENT,
@@ -249,7 +245,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 		});
 
 		if (ifPatientExistWithCredentials) {
-			if (!ifPatientExistWithCredentials.emailVerified) {
+			if (!ifPatientExistWithCredentials.isVerified) {
 				throw new Error("Email Not Verified");
 			}
 
@@ -282,13 +278,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 					role: UserRole.PATIENT,
 					googleId: googleIdTokenPayload.sub,
 					authProvider: AuthProvider.GOOGLE,
-					emailVerified: true,
-					patient: {
-						create: {
-							name: googleIdTokenPayload.name,
-							email: googleIdTokenPayload.email,
-						},
-					},
+					isVerified: true,
 				},
 			});
 		}
