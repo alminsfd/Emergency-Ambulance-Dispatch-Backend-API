@@ -2,8 +2,7 @@ import type { Request, Response } from "express";
 import httpStatus from "http-status";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-
-
+import { AuthService } from "./auth.service";
 
 const googleLogin = catchAsync(async (req: Request, res: Response) => {
 	const payload = req.body;
@@ -16,7 +15,7 @@ const googleLogin = catchAsync(async (req: Request, res: Response) => {
 		httpOnly: true,
 		secure: false,
 		sameSite: "lax",
-		maxAge: 1000 * 60 * 60 * 24, 
+		maxAge: 1000 * 60 * 60 * 24,
 	});
 	res.cookie("refreshToken", refreshToken, {
 		httpOnly: true,
@@ -37,7 +36,5 @@ const googleLogin = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const AuthController = {
-
 	googleLogin,
-
 };

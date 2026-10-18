@@ -5,5 +5,4 @@ const router = Router();
 
 router.post("/google", AuthController.googleLogin);
 
-
 export const AuthRoutes = router;
